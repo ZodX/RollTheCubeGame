@@ -107,7 +107,11 @@ public class EditorController {
                 new Image(getClass().getResource("/images/editorEmptyField.png").toExternalForm()),
                 new Image(getClass().getResource("/images/blockedfield.png").toExternalForm()),
                 new Image(getClass().getResource("/images/goalfield.png").toExternalForm()),
-                new Image(getClass().getResource("/images/cube0.png").toExternalForm())
+                new Image(getClass().getResource("/images/cube0.png").toExternalForm()),
+                new Image(getClass().getResource("/images/editorEmptyHighlighted.png").toExternalForm()),
+                new Image(getClass().getResource("/images/editorBlockedFieldHighlighted.png").toExternalForm()),
+                new Image(getClass().getResource("/images/editorGoalfieldHighlighted.png").toExternalForm()),
+                new Image(getClass().getResource("/images/editorCubeRedHighlighted.png").toExternalForm())
 
         );
         resetGame();
@@ -167,6 +171,8 @@ public class EditorController {
                 view.setImage(cubeImages.get(4));
                 goalcount--;
             }
+            if (view.getImage() == cubeImages.get(2))
+                view.setImage(cubeImages.get(4));
         } else if (selectedBlocked) {
             if (view.getImage() == cubeImages.get(0)) {
             }
@@ -268,6 +274,11 @@ public class EditorController {
         selectedBlocked = false;
         selectedGoal = false;
         selectedStarter = false;
+
+        empty.setImage(cubeImages.get(5));
+        blocked.setImage(cubeImages.get(2));
+        goal.setImage(cubeImages.get(3));
+        starter.setImage(cubeImages.get(0));
     }
 
     public void handleBlockedClicked (MouseEvent mouseEvent) {
@@ -275,6 +286,11 @@ public class EditorController {
         selectedBlocked = true;
         selectedGoal = false;
         selectedStarter = false;
+
+        empty.setImage(cubeImages.get(1));
+        blocked.setImage(cubeImages.get(6));
+        goal.setImage(cubeImages.get(3));
+        starter.setImage(cubeImages.get(0));
     }
 
     public void handleGoalClicked (MouseEvent mouseEvent) {
@@ -282,6 +298,11 @@ public class EditorController {
         selectedBlocked = false;
         selectedGoal = true;
         selectedStarter = false;
+
+        empty.setImage(cubeImages.get(1));
+        blocked.setImage(cubeImages.get(2));
+        goal.setImage(cubeImages.get(7));
+        starter.setImage(cubeImages.get(0));
     }
 
     public void handleStarterClicked (MouseEvent mouseEvent) {
@@ -289,5 +310,10 @@ public class EditorController {
         selectedBlocked = false;
         selectedGoal = false;
         selectedStarter = true;
+
+        empty.setImage(cubeImages.get(1));
+        blocked.setImage(cubeImages.get(2));
+        goal.setImage(cubeImages.get(3));
+        starter.setImage(cubeImages.get(8));
     }
 }
