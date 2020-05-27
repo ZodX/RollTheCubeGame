@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
+    <persistence-unit name="rolling-cubes" transaction-type="RESOURCE_LOCAL">
+        <validation-mode>AUTO</validation-mode>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="${db.driver}"/>
+            <property name="javax.persistence.jdbc.url" value="${db.url}"/>
+            <property name="javax.persistence.jdbc.user" value="${db.user}"/>
+            <property name="javax.persistence.jdbc.password" value="${db.password}"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
+            <property name="javax.persistence.schema-generation.scripts.action" value="create"/>
+            <property name="javax.persistence.schema-generation.scripts.create-target" value="./create.sql"/>
+            <property name="javax.persistence.schema-generation.scripts.drop-target" value="./drop.sql"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
