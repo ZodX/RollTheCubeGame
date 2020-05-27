@@ -14,6 +14,8 @@ class RollingCubesStateTest {
         assertEquals(3, testGameState.getPlayer_rightside());
         assertEquals(4, testGameState.getPlayer_upside());
         assertEquals(5, testGameState.getPlayer_under());
+
+
     }
 
     @Test
