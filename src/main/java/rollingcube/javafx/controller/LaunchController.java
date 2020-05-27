@@ -43,4 +43,21 @@ public class LaunchController {
         }
     }
 
+    public void handleHelpAction(ActionEvent actionEvent) throws IOException {
+        fxmlLoader.setLocation(getClass().getResource("/fxml/help.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+        log.info("Loading help page...", playerNameTextField.getText());
+    }
+
+    public void handleEditorAction(ActionEvent actionEvent) throws IOException {
+        fxmlLoader.setLocation(getClass().getResource("/fxml/editor.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+        log.info("Loading editor page...", playerNameTextField.getText());
+    }
 }
