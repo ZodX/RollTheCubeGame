@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>hu.unideb.inf</groupId>
-    <artifactId>rolling-cubes-game</artifactId>
+    <artifactId>roll-the-cube-game</artifactId>
     <version>1.0</version>
-    <description>The rolling cubes puzzle game.</description>
+    <description>Roll the cube game</description>
     <scm>
         <connection>scm:git:https://github.com/ZodX/SafeSaveForSzoftie</connection>
         <developerConnection>scm:git:https://github.com/ZodX/SafeSaveForSzoftie.git</developerConnection>
