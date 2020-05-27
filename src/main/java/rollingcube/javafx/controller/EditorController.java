@@ -161,45 +161,55 @@ public class EditorController {
         ImageView viewHelper;
 
         if (selectedEmpty) {
-            if (view.getImage() == cubeImages.get(0)){
+            if (view.getImage() == cubeImages.get(0)) {
             }
             if (view.getImage() == cubeImages.get(3) && goalcount > 1) {
                 view.setImage(cubeImages.get(4));
                 goalcount--;
             }
-        } else
-            if(selectedBlocked) {
-                if (view.getImage() == cubeImages.get(0)){
-                }
-                if (view.getImage() == cubeImages.get(3) && goalcount > 1) {
-                    view.setImage(cubeImages.get(2));
+        } else if (selectedBlocked) {
+            if (view.getImage() == cubeImages.get(0)) {
+            }
+            if (view.getImage() == cubeImages.get(3) && goalcount > 1) {
+                view.setImage(cubeImages.get(2));
+                goalcount--;
+            }
+            if (view.getImage() == cubeImages.get(4))
+                view.setImage(cubeImages.get(2));
+        } else if (selectedGoal) {
+            if (view.getImage() == cubeImages.get(0)) {
+            } else {
+                view.setImage(cubeImages.get(3));
+                goalcount++;
+            }
+        } else if (selectedStarter) {
+            if (view.getImage() == cubeImages.get(3)) {
+                if (goalcount > 1) {
+                    for (int i = 0; i < 7; i++)
+                        for (int j = 0; j < 7; j++) {
+                            viewHelper = (ImageView) gameGrid.getChildren().get(i * 7 + j);
+                            if (viewHelper.getImage() == cubeImages.get(0)) {
+                                viewHelper.setImage(cubeImages.get(4));
+
+                                view.setImage(cubeImages.get(0));
+                                break;
+                            }
+                        }
                     goalcount--;
                 }
-                if (view.getImage() == cubeImages.get(4))
-                    view.setImage(cubeImages.get(2));
-            } else
-                if (selectedGoal) {
-                    if (view.getImage() == cubeImages.get(0)){
-                    } else {
-                        view.setImage(cubeImages.get(3));
-                        goalcount++;
-                    }
-                } else
-                    if (selectedStarter) {
-                        if (view.getImage() == cubeImages.get(3) && goalcount > 1) {
-                            for (int i = 0; i < 7; i++)
-                                for (int j = 0; j < 7; j++) {
-                                    viewHelper = (ImageView) gameGrid.getChildren().get(i * 7 + j);
-                                    if (viewHelper.getImage() == cubeImages.get(0)) {
-                                        viewHelper.setImage(cubeImages.get(4));
+            } else {
+                for (int i = 0; i < 7; i++)
+                    for (int j = 0; j < 7; j++) {
+                        viewHelper = (ImageView) gameGrid.getChildren().get(i * 7 + j);
+                        if (viewHelper.getImage() == cubeImages.get(0)) {
+                            viewHelper.setImage(cubeImages.get(4));
 
-                                        view.setImage(cubeImages.get(0));
-                                        break;
-                                    }
-                                }
-                            goalcount--;
+                            view.setImage(cubeImages.get(0));
+                            break;
                         }
                     }
+            }
+        }
     }
 
     public void handleSaveExitButton(ActionEvent actionEvent) throws IOException {
