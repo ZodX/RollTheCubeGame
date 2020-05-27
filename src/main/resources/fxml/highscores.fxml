@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="774.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rollingcube.javafx.controller.HighScoreController">
+   <children>
+      <TableView fx:id="highScoreTable" editable="true" layoutX="25.0" layoutY="74.0" prefHeight="550.0" prefWidth="650.0">
+        <columns>
+          <TableColumn fx:id="player" prefWidth="200.0" text="Player" />
+          <TableColumn fx:id="steps" prefWidth="50.0" text="Steps" />
+            <TableColumn fx:id="duration" prefWidth="100.0" text="Duration" />
+            <TableColumn fx:id="created" prefWidth="295.0" text="Date" />
+        </columns>
+      </TableView>
+      <Label layoutX="272.0" layoutY="32.0" text="High Scores">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" layoutX="27.0" layoutY="646.0" prefHeight="100.0" prefWidth="650.0" spacing="125.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleOrderSteps" prefHeight="51.0" prefWidth="122.0" text="Order by steps" />
+            <Button mnemonicParsing="false" onAction="#handleOrderTime" prefHeight="51.0" prefWidth="122.0" text="Order by time" />
+            <Button mnemonicParsing="false" onAction="#handleRestartButton" prefHeight="51.0" prefWidth="122.0"  text="Restart" textFill="Black">
+               <font>
+                  <Font name="AnjaliOldLipi" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</Pane>
