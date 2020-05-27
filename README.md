@@ -57,8 +57,3 @@ For running the game from terminal:
 ```bash
 $ mvn exec:java
 ```
-
-<<<<<<< HEAD
-
-=======
->>>>>>> a88a67a152bcd033ba0fb8fc0330235871c1a1bf
