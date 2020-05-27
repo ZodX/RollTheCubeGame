@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rollingcube.javafx.controller.HelpController">
+   <bottom>
+      <Button mnemonicParsing="false" onAction="#handleMenuAction" text="Menu" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="40.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <top>
+      <Label text="Game Rules" textFill="RED" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="33.0" />
+         </font>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </Label>
+   </top>
+   <center>
+      <Label prefHeight="220.0" prefWidth="449.0" BorderPane.alignment="CENTER">
+         <graphic>
+            <TextArea prefHeight="200.0" prefWidth="200.0" text="You are playing with a cube which has 1 red side and 5 blue sides. &#10;&#10;You have to get to the goal field by rolling without touching the ground with the red side of the cube. &#10;&#10;The map has blocked fields, where are other cubes sitting so the player has to bypass those fields. &#10;&#10;The player's cube spawns with the red side facing up." wrapText="true" />
+         </graphic>
+      </Label>
+   </center>
+</BorderPane>
