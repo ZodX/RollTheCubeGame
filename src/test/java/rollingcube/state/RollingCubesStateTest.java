@@ -18,10 +18,25 @@ class RollingCubesStateTest {
 
     @Test
     void testIsValidTray() {
-        RollingCubesState testGameState = new RollingCubesState();
+        RollingCubesState testGameState = new RollingCubesState(new int[][] {
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 8, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 6, 6, 6, 6, 6},
+                {6, 6, 6, 7, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 0}}
+                );
         assertTrue(testGameState.isValidTray(testGameState.getTray()));
 
         testGameState.getTray()[6][6] = 6;
+        assertThrows(IllegalArgumentException.class, () -> testGameState.isValidTray(testGameState.getTray()));
+
+        testGameState.getTray()[6][6] = 0;
+        testGameState.getTray()[1][5] = 6;
+        assertThrows(IllegalArgumentException.class, () -> testGameState.isValidTray(testGameState.getTray()));
+
+        testGameState.getTray()[4][4] = 9;
         assertThrows(IllegalArgumentException.class, () -> testGameState.isValidTray(testGameState.getTray()));
     }
 
@@ -50,6 +65,23 @@ class RollingCubesStateTest {
         testGameState2.setPlayer_pos_y(testGameState2.getGoal_pos_y());
 
         assertTrue(testGameState2.isSolved());
+    }
+
+    @Test
+    void testIsGoalField() {
+        RollingCubesState testGameState = new RollingCubesState(new int[][]{
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 6, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 8, 7, 6, 6},
+                {6, 7, 6, 0, 6, 6, 6},
+                {6, 6, 6, 6, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 7}
+        });
+
+        assertTrue(testGameState.isGoalField(3, 3));
+        assertFalse(testGameState.isGoalField(4, 3));
+        assertFalse(testGameState.isGoalField(2, 4));
     }
 
     @Test
@@ -95,6 +127,21 @@ class RollingCubesStateTest {
         assertEquals("UP", testGameState.getRollDirection(testGameState.getPlayer_pos_x(), testGameState.getPlayer_pos_y(), 3, 3));
         assertEquals("RIGHT", testGameState.getRollDirection(testGameState.getPlayer_pos_x(), testGameState.getPlayer_pos_y(), 4, 4));
         assertEquals("DOWN", testGameState.getRollDirection(testGameState.getPlayer_pos_x(), testGameState.getPlayer_pos_y(), 5, 3));
+
+        RollingCubesState testGameState2 = new RollingCubesState(new int[][] {
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 8, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 7, 7, 6, 6},
+                {6, 7, 7, 0, 7, 6, 6},
+                {6, 6, 6, 7, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 7}
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> testGameState2.getRollDirection(testGameState2.getPlayer_pos_x(), testGameState2.getPlayer_pos_y(), 4, 2));
+        assertThrows(IllegalArgumentException.class, () -> testGameState2.getRollDirection(testGameState2.getPlayer_pos_x(), testGameState2.getPlayer_pos_y(), 3, 3));
+        assertThrows(IllegalArgumentException.class, () -> testGameState2.getRollDirection(testGameState2.getPlayer_pos_x(), testGameState2.getPlayer_pos_y(), 4, 4));
+        assertThrows(IllegalArgumentException.class, () -> testGameState2.getRollDirection(testGameState2.getPlayer_pos_x(), testGameState2.getPlayer_pos_y(), 5, 3));
     }
 
     @Test
@@ -103,8 +150,8 @@ class RollingCubesStateTest {
                 {6, 6, 6, 6, 7, 6, 6},
                 {6, 7, 7, 6, 6, 8, 7},
                 {6, 6, 6, 6, 7, 7, 6},
-                {6, 6, 6, 7, 7, 6, 6},
-                {6, 7, 6, 0, 7, 6, 6},
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 6, 0, 6, 6, 6},
                 {6, 6, 6, 6, 7, 6, 7},
                 {7, 6, 6, 6, 6, 6, 7}
         });
@@ -113,6 +160,18 @@ class RollingCubesStateTest {
         assertTrue(testGameState.canRollToDirection("DOWN"));
         assertTrue(testGameState.canRollToDirection("RIGHT"));
         assertTrue(testGameState.canRollToDirection("UP"));
+
+        testGameState.rollToEmptySpace(4, 2);
+        assertFalse(testGameState.canRollToDirection("LEFT"));
+        testGameState.rollToEmptySpace(4, 3);
+        testGameState.rollToEmptySpace(5, 3);
+        assertFalse(testGameState.canRollToDirection("DOWN"));
+        testGameState.rollToEmptySpace(4, 3);
+        testGameState.rollToEmptySpace(4, 4);
+        assertFalse(testGameState.canRollToDirection("RIGHT"));
+        testGameState.rollToEmptySpace(4, 3);
+        testGameState.rollToEmptySpace(3, 3);
+        assertFalse(testGameState.canRollToDirection("UP"));
     }
 
     @Test
@@ -149,7 +208,7 @@ class RollingCubesStateTest {
 
         testGameState.rollToEmptySpace(4,2);
 
-        int[][] expected = {
+        int[][] expectedLeft = {
                 {6, 6, 6, 6, 7, 6, 6},
                 {6, 7, 7, 6, 6, 8, 7},
                 {6, 6, 6, 6, 7, 7, 6},
@@ -159,7 +218,49 @@ class RollingCubesStateTest {
                 {7, 6, 6, 6, 6, 6, 7}
         };
 
-        assertArrayEquals(expected, testGameState.getTray());
+        assertArrayEquals(expectedLeft, testGameState.getTray());
+
+        testGameState.rollToEmptySpace(5,2);
+
+        int[][] expectedDown = {
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 8, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 7, 7, 6, 6},
+                {6, 7, 6, 6, 7, 6, 6},
+                {6, 6, 4, 6, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 7}
+        };
+
+        assertArrayEquals(expectedDown, testGameState.getTray());
+
+        testGameState.rollToEmptySpace(5,3);
+
+        int[][] expectedRight = {
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 8, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 7, 7, 6, 6},
+                {6, 7, 6, 6, 7, 6, 6},
+                {6, 6, 6, 0, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 7}
+        };
+
+        assertArrayEquals(expectedRight, testGameState.getTray());
+
+        testGameState.rollToEmptySpace(4,3);
+
+        int[][] expectedUp = {
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 8, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 7, 7, 6, 6},
+                {6, 7, 6, 3, 7, 6, 6},
+                {6, 6, 6, 6, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 7}
+        };
+
+        assertArrayEquals(expectedUp, testGameState.getTray());
     }
 
     @Test
