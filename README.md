@@ -21,7 +21,7 @@ The player's cube spawns with the red side facing up.
 	* In the matrix representation the player's cube can be found by the number of the current side facing up("to the sky").
 	* The scores of the players are stored in a JPA database.
 
-## Project usage
+## Project dependencies
 
   * OpenJFX
   * JPA
@@ -50,5 +50,11 @@ For creating the site showing details use:
 
 ```bash
 $ mvn site
+```
+
+For running the game from terminal:
+
+```bash
+$ mvn exec:java
 ```
 
