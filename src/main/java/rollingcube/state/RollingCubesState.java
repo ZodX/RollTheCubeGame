@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bytecode.Throw;
 
+import java.io.*;
+import java.util.Scanner;
+
 /**
  * Class representing the state of the puzzle.
  */
@@ -16,15 +19,7 @@ public class RollingCubesState implements Cloneable {
     /**
      * The array representing the initial configuration of the tray.
      */
-    public static final int[][] INITIAL = {
-            {6, 6, 6, 6, 7, 6, 6},
-            {6, 7, 7, 6, 6, 8, 7},
-            {6, 6, 6, 6, 7, 7, 6},
-            {6, 6, 6, 6, 7, 6, 6},
-            {6, 7, 6, 6, 6, 6, 6},
-            {6, 6, 6, 7, 7, 6, 7},
-            {7, 6, 6, 6, 6, 6, 0}
-    };
+    private static int[][] INITIAL = new int[7][7];
 
     /**
      * The array storing the current configuration of the tray.
@@ -57,12 +52,37 @@ public class RollingCubesState implements Cloneable {
 
     /**
      * Creates a {@code RollingCubesState} object that is initialized it with
-     * the specified array.
-     *
-     *
+     * a map loaded from map.txt.
      */
     public RollingCubesState() {
-        this(INITIAL);
+        String url = getClass().getResource("/map/map.txt").toExternalForm().toString();
+        String newUrl = "";
+
+        for (int i = 5; i < url.length(); i++)
+            newUrl = newUrl + url.charAt(i);
+
+        log.info("newUrl: {}", newUrl);
+
+        try {
+            Scanner sc = new Scanner(new File(newUrl));
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 7; j++) {
+                    INITIAL[i][j] = sc.nextInt();
+                }
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            log.info("EXCEPTION: FILE NOT FOUND.");
+        }
+
+        isValidTray(INITIAL);
+        initTray(INITIAL);
+        this.player_face = 0;
+        this.player_leftside = 1;
+        this.player_downside = 2;
+        this.player_rightside = 3;
+        this.player_upside = 4;
+        this.player_under = 5;
     }
 
     /**
@@ -329,5 +349,6 @@ public class RollingCubesState implements Cloneable {
         System.out.println(state);
         state.rollToEmptySpace(6, 5);
         System.out.println(state);
+
     }
 }
