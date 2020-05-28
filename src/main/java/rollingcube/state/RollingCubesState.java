@@ -61,8 +61,6 @@ public class RollingCubesState implements Cloneable {
         for (int i = 5; i < url.length(); i++)
             newUrl = newUrl + url.charAt(i);
 
-        log.info("newUrl: {}", newUrl);
-
         try {
             Scanner sc = new Scanner(new File(newUrl));
             for (int i = 0; i < 7; i++) {
