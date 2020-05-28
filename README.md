@@ -57,3 +57,5 @@ For running the game from terminal:
 ```bash
 $ mvn exec:java
 ```
+
+> NOTE The path to the project should contain only english letters. (US-ASCII)
