@@ -100,7 +100,15 @@ class RollingCubesStateTest {
 
     @Test
     void testIsFieldNear() {
-        RollingCubesState testGameState = new RollingCubesState();
+        RollingCubesState testGameState = new RollingCubesState(new int[][] {
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 8, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 6, 6, 6, 6, 6},
+                {6, 6, 6, 7, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 0}
+        });
 
         assertTrue(testGameState.isFieldNear(6,5));
         assertTrue(testGameState.isFieldNear(5, 6));
@@ -279,37 +287,22 @@ class RollingCubesStateTest {
 
     @Test
     void testToString() {
-        RollingCubesState testGameState = new RollingCubesState();
+        RollingCubesState testGameState = new RollingCubesState(new int[][] {
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 7, 6, 6, 8, 7},
+                {6, 6, 6, 6, 7, 7, 6},
+                {6, 6, 6, 6, 7, 6, 6},
+                {6, 7, 6, 6, 6, 6, 6},
+                {6, 6, 6, 7, 7, 6, 7},
+                {7, 6, 6, 6, 6, 6, 0}
+        });
 
-        int[][] testTray = new int[7][7];
-
-        String url = getClass().getResource("/map/map.txt").toExternalForm().toString();
-        String newUrl = "";
-
-        for (int i = 5; i < url.length(); i++)
-            newUrl = newUrl + url.charAt(i);
-
-        try {
-            Scanner sc = new Scanner(new File(newUrl));
-
-            for (int i = 0; i < 7; i++)
-                for (int j = 0; j < 7; j++)
-                    testTray[i][j] = sc.nextInt();
-
-            sc.close();
-        } catch (FileNotFoundException e) {
-        }
-
-        String testString = "";
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                testString += testTray[i][j] + " ";
-            }
-            testString += "\n";
-        }
-
-
-
-        assertEquals(testString, testGameState.toString());
+        assertEquals("6 6 6 6 7 6 6 \n"
+                            + "6 7 7 6 6 8 7 \n"
+                            + "6 6 6 6 7 7 6 \n"
+                            + "6 6 6 6 7 6 6 \n"
+                            + "6 7 6 6 6 6 6 \n"
+                            + "6 6 6 7 7 6 7 \n"
+                            + "7 6 6 6 6 6 0 \n", testGameState.toString());
     }
 }
