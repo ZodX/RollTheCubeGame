@@ -108,23 +108,20 @@ public class RollingCubesState implements Cloneable {
      * @return {@code true} if the tray is valid. Throwing {@code IllegalArgumentException} with the message "Not a valid tray", if the tray is invalid.
      */
     public boolean isValidTray(int[][] a) {
-        boolean isGoal = false,
-                isStarting = false;
-        int cubeCount = 0;
+        int cubeCount = 0, goalCount = 0;
 
         for (int i = 0; i < 7; i++)
             for (int j = 0; j < 7; j++)
-                if (a[i][j] == 0) {
-                    isStarting = true;
+                if (a[i][j] == 0)
                     cubeCount++;
-                } else
+                else
                     if (a[i][j] == 8)
-                        isGoal = true;
+                        goalCount++;
                     else
                         if (a[i][j] != 6 && a[i][j] != 7)
                             throw new IllegalArgumentException("Not a valid tray");
 
-        if (isGoal && isStarting && cubeCount == 1)
+        if (goalCount == 1 && cubeCount == 1)
             return true;
         else
             throw new IllegalArgumentException("Not a valid tray");

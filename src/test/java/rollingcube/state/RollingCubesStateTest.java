@@ -2,6 +2,10 @@ package rollingcube.state;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RollingCubesStateTest {
@@ -14,8 +18,6 @@ class RollingCubesStateTest {
         assertEquals(3, testGameState.getPlayer_rightside());
         assertEquals(4, testGameState.getPlayer_upside());
         assertEquals(5, testGameState.getPlayer_under());
-
-
     }
 
     @Test
@@ -45,15 +47,25 @@ class RollingCubesStateTest {
     @Test
     void testInitTray() {
         RollingCubesState testGameState = new RollingCubesState();
-        int[][] testTray = {
-                {6, 6, 6, 6, 7, 6, 6},
-                {6, 7, 7, 6, 6, 8, 7},
-                {6, 6, 6, 6, 7, 7, 6},
-                {6, 6, 6, 6, 7, 6, 6},
-                {6, 7, 6, 6, 6, 6, 6},
-                {6, 6, 6, 7, 7, 6, 7},
-                {7, 6, 6, 6, 6, 6, 0}
-        };
+        int[][] testTray = new int[7][7];
+
+        String url = getClass().getResource("/map/map.txt").toExternalForm().toString();
+        String newUrl = "";
+
+        for (int i = 5; i < url.length(); i++)
+            newUrl = newUrl + url.charAt(i);
+
+        try {
+            Scanner sc = new Scanner(new File(newUrl));
+
+            for (int i = 0; i < 7; i++)
+                for (int j = 0; j < 7; j++)
+                    testTray[i][j] = sc.nextInt();
+
+            sc.close();
+        } catch (FileNotFoundException e) {
+        }
+
         assertArrayEquals(testTray, testGameState.getTray());
     }
 

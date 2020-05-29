@@ -1,13 +1,9 @@
 package rollingcube.javafx.controller;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,18 +19,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DurationFormatUtils;
-import rollingcube.results.GameResult;
-import rollingcube.results.GameResultDao;
-import rollingcube.state.RollingCubesState;
 
 import javax.inject.Inject;
 import java.io.*;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Scanner;
 
 @Slf4j
 public class EditorController {
@@ -42,13 +30,6 @@ public class EditorController {
     @Inject
     private FXMLLoader fxmlLoader;
 
-    @Inject
-    private GameResultDao gameResultDao;
-
-    private String playerName;
-    private RollingCubesState gameState;
-    private IntegerProperty steps = new SimpleIntegerProperty();
-    private Instant startTime;
     private List<Image> cubeImages;
 
     @FXML
@@ -58,24 +39,7 @@ public class EditorController {
     private GridPane gameGrid;
 
     @FXML
-    private VBox vBox;
-
-    @FXML
     private ImageView empty, blocked, goal, starter;
-
-    @FXML
-    private Label stepsLabel;
-
-    @FXML
-    private Label stopWatchLabel;
-
-    private Timeline stopWatchTimeline;
-
-    @FXML
-    private Button resetButton;
-
-    @FXML
-    private Button giveUpButton;
 
     private boolean selectedEmpty = false,
                     selectedBlocked = false,
@@ -83,12 +47,6 @@ public class EditorController {
                     selectedStarter = false;
 
     private int goalcount = 1;
-
-    private BooleanProperty gameOver = new SimpleBooleanProperty();
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
 
     private int[][] editorTray = {
             {8, 6, 6, 6, 6, 6, 6},
@@ -185,24 +143,19 @@ public class EditorController {
         } else if (selectedGoal) {
             if (view.getImage() == cubeImages.get(0)) {
             } else {
-                view.setImage(cubeImages.get(3));
-                goalcount++;
+                for (int i = 0; i < 7; i++)
+                    for (int j = 0; j < 7; j++) {
+                        viewHelper = (ImageView) gameGrid.getChildren().get(i * 7 + j);
+                        if (viewHelper.getImage() == cubeImages.get(3)) {
+                            viewHelper.setImage(cubeImages.get(4));
+
+                            view.setImage(cubeImages.get(3));
+                            break;
+                        }
+                    }
             }
         } else if (selectedStarter) {
             if (view.getImage() == cubeImages.get(3)) {
-                if (goalcount > 1) {
-                    for (int i = 0; i < 7; i++)
-                        for (int j = 0; j < 7; j++) {
-                            viewHelper = (ImageView) gameGrid.getChildren().get(i * 7 + j);
-                            if (viewHelper.getImage() == cubeImages.get(0)) {
-                                viewHelper.setImage(cubeImages.get(4));
-
-                                view.setImage(cubeImages.get(0));
-                                break;
-                            }
-                        }
-                    goalcount--;
-                }
             } else {
                 for (int i = 0; i < 7; i++)
                     for (int j = 0; j < 7; j++) {
