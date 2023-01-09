@@ -15,11 +15,11 @@ The player's cube spawns with the red side facing up.
   * Blocked fields are represented with 7.
   * Goal field('s) is(/are) represented with 8.
   * Other designating elements are represented with [9..11].
-	* The player's cube is represented with [0..5]
-		* 0: The red side.
-		* 1..5: The blue sides.
-	* In the matrix representation the player's cube can be found by the number of the current side facing up("to the sky").
-	* The scores of the players are stored in a JPA database.
+  * The player's cube is represented with [0..5]
+	* 0: The red side.
+	* 1..5: The blue sides.
+  * In the matrix representation the player's cube can be found by the number of the current side facing up("to the sky").
+  * The scores of the players are stored in a JPA database.
 
 ## Project dependencies
 
